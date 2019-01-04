@@ -17,9 +17,10 @@ public:
 };
 
 struct functor {
-    int& i;
-    functor(int& i_): i(i_) {}
+    unsigned int& i;
+    functor(unsigned int& i_): i(i_) {}
     void operator()() {
+	    std::cout << "Your're in thread: " << std::this_thread::get_id() << std::endl;
         for(unsigned j = 0; j < i; j++) {
             std::this_thread::sleep_for(std::chrono::seconds(1));
             std::cout << "Functor thread waited some time to be here..." << std::endl;
@@ -28,7 +29,7 @@ struct functor {
 };
 
 void f() {
-    int pause = 3;
+    unsigned int pause = 3;
     thread_guard thread((std::thread(functor(pause))));
-    std::cout << "Main thread is here..." << std::endl;
+    std::cout << "Your're in main thread: " << std::this_thread::get_id() << std::endl;
 }
