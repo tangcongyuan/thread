@@ -1,5 +1,6 @@
 #include "thread_guard.h"
 #include "threadsafe_queue.h"
+#include <chrono>
 #include <future>
 #include <thread>
 #include <iostream>
@@ -37,10 +38,15 @@ std::string return_some_string() {
 }
 
 int main(int argc, char** argv) {
+    auto start = std::chrono::high_resolution_clock::now();
     // std::thread thread(print);
     // thread.join();
     // f();
     std::cout << "Your computer has " << std::thread::hardware_concurrency() << " cores." << std::endl; 
+
+    auto stop = std::chrono::high_resolution_clock::now();
+    std::cout << "Time has passed " << std::chrono::duration<double, std::micro>(stop - start).count() << " microseconds." << std::endl;
+    // std::cout << "Time has passed " << std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count() << " microseconds." << std::endl;
 
     // demo_threadsafe_queue();
 
